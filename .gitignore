@@ -103,6 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-# Generated images
-*.jpeg
-*.png
+aue.png
