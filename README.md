@@ -4,7 +4,7 @@ This project is using React/Node.js stack.
 
 ### `Installation`
 
-First of all, you need to install Node.js package from [Node.js official page](https://nodejs.org/en/) or from the terminal:
+First of all, you need to install Node.js package (LTS) from [Node.js official page](https://nodejs.org/en/) or from the terminal:
 
 Ubuntu:
 `sudo apt-get install node`
