@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import FooterItem from './FooterItem';
+import PropTypes from 'prop-types';
 
 const styles = {
   container: {
@@ -8,7 +9,7 @@ const styles = {
   },
 };
 
-export default function FooterItemsContainer(props) {
+function FooterItemsContainer(props) {
   return (
     <Container style={styles.container}>
       <Row>
@@ -19,3 +20,9 @@ export default function FooterItemsContainer(props) {
     </Container>
   );
 }
+
+FooterItemsContainer.propTypes = {
+  credits: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default FooterItemsContainer;

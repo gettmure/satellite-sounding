@@ -1,5 +1,6 @@
 import React from 'react';
 import Col from 'react-bootstrap/Col';
+import PropTypes from 'prop-types';
 
 const styles = {
   cell: {
@@ -16,7 +17,7 @@ const styles = {
 
 const CELL_CLASSNAME = 'd-flex justify-content-md-center';
 
-export default function FooterItem({ credit }) {
+function FooterItem({ credit }) {
   return (
     <Col className={CELL_CLASSNAME} style={styles.cell}>
       <a target="_blank" rel="noopener noreferrer" href={credit.url}>
@@ -25,3 +26,9 @@ export default function FooterItem({ credit }) {
     </Col>
   );
 }
+
+FooterItem.propTypes = {
+  credit: PropTypes.object.isRequired,
+};
+
+export default FooterItem;
