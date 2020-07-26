@@ -19,6 +19,22 @@ const styles = {
     filter: 'blur(2px)',
     transform: 'scale(1.3)',
   },
+  welcomeText: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    color: 'white',
+    fontWeight: 'bold',
+    border: '3px solid #f1f1f1',
+    transform: 'translate(-50%, -50%)',
+    zIndex: '2',
+    width: '70%',
+    padding: '20px',
+    textAlign: 'center',
+    textShadow:
+      '2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
+  },
 };
 
 function Welcome({ loginClick }) {
