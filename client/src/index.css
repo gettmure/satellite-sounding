@@ -24,3 +24,46 @@ code {
   bottom: 0;
   left: 0;
 }
+
+@keyframes zoomImageIn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-250%);
+    opacity: -100%;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 100%;
+  }
+}
+
+.welcome-text {
+  animation: 3s ease 0s 1 slideInFromLeft;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 70%;
+  padding: 20px;
+  text-align: center;
+  text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000,
+    1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+.welcome-image {
+  animation: 3s ease 0s 1 zoomImageIn;
+  transition: all 2s;
+}
