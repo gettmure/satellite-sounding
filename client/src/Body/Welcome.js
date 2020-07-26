@@ -37,22 +37,18 @@ const styles = {
   },
 };
 
-function Welcome({ loginClick }) {
+function Welcome() {
   return (
     <div className="welcome-container" style={styles.container}>
       <div className="welcome-image" style={styles.welcomeImage}></div>
       <div className="welcome-text" style={styles.welcomeText}>
         <h1>Satellite sounding application</h1>
-        <Button variant="primary" onClick={() => loginClick()}>
+        <Button variant="primary" onClick={() => console.log('aue')}>
           Get started!
         </Button>
       </div>
     </div>
   );
 }
-
-Welcome.propTypes = {
-  loginClick: PropTypes.func,
-};
 
 export default Welcome;

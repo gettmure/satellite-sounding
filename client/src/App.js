@@ -4,15 +4,18 @@ import NavigationBar from './Navbar/NavigationBar';
 import Footer from './Footer/Footer';
 import Welcome from './Body/Welcome';
 import MapRendering from './Body/MapRendering';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="app">
-      <NavigationBar></NavigationBar>
-      <MapRendering></MapRendering>
-      {/* <Welcome loginClick={googleAuth}></Welcome> */}
-      <Footer></Footer>
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <NavigationBar></NavigationBar>
+        <Route component={Welcome} path="/home"></Route>
+        <Route component={MapRendering} path="/rendering"></Route>
+        <Footer></Footer>
+      </div>
+    </BrowserRouter>
   );
 }
 
