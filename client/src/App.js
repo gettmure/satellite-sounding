@@ -3,16 +3,14 @@ import React from 'react';
 import NavigationBar from './Navbar/NavigationBar';
 import Footer from './Footer/Footer';
 import Welcome from './Body/Welcome';
+import MapRendering from './Body/MapRendering';
 
 function App() {
-  const googleAuth = async () => {
-    // const login = await fetch('https://localhost:1337/login');
-  };
-
   return (
     <div className="app">
       <NavigationBar></NavigationBar>
-      <Welcome loginClick={googleAuth}></Welcome>
+      <MapRendering></MapRendering>
+      {/* <Welcome loginClick={googleAuth}></Welcome> */}
       <Footer></Footer>
     </div>
   );

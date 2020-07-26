@@ -46,10 +46,16 @@ code {
 }
 
 .welcome-text {
-  animation: 3s ease 0s 1 slideInFromLeft;
+  animation: 2s ease 0s 1 slideInFromLeft;
 }
 
 .welcome-image {
   animation: 3s ease 0s 1 zoomImageIn;
   transition: all 2s;
+}
+
+.leaflet-container {
+  height: 86.6%;
+  width: 100%;
+  position: absolute;
 }
