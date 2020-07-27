@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
@@ -37,18 +38,20 @@ const styles = {
   },
 };
 
+
 function Welcome() {
   return (
     <div className="welcome-container" style={styles.container}>
       <div className="welcome-image" style={styles.welcomeImage}></div>
       <div className="welcome-text" style={styles.welcomeText}>
         <h1>Satellite sounding application</h1>
-        <Button variant="primary" onClick={() => console.log('aue')}>
-          Get started!
-        </Button>
+        <a href="/rendering">
+  <Button variant="primary">Get started!</Button>
+    </a>
       </div>
     </div>
   );
 }
 
+  
 export default Welcome;

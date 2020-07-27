@@ -13,11 +13,16 @@ const config = {
 };
 
 export default function MapRendering() {
+
   const [renderingType, setRenderingType] = useState('TRUE_COLOR');
+
+  const [url,setUrl]=useState(config.baseUrl);
+
   return (
     <div className="map-container">
       <RenderingChooseForm
         changeRenderingType={setRenderingType}
+        changeUrl={setUrl}
       ></RenderingChooseForm>
       <LeafletMap
         center={[43.03781097648953, 131.89533233642578]}
@@ -35,7 +40,7 @@ export default function MapRendering() {
         <TileLayer attribution={config.attribution} url={config.urlPattern} />
         <WMSTileLayer
           tileSize={512}
-          url={config.baseUrl}
+          url={url}
           layers={renderingType}
         />
       </LeafletMap>

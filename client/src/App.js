@@ -11,8 +11,8 @@ function App() {
     <BrowserRouter>
       <div className="app">
         <NavigationBar></NavigationBar>
-        <Route component={Welcome} path="/home"></Route>
-        <Route component={MapRendering} path="/rendering"></Route>
+        <Route exact component={Welcome} path="/"></Route>
+        <Route exact component={MapRendering} path="/rendering"></Route>
         <Footer></Footer>
       </div>
     </BrowserRouter>
