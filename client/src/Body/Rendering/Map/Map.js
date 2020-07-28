@@ -33,6 +33,7 @@ function Map({ layer, url, isDraggable, polygon, changePolygon }) {
   const [mouseIsDown, setMouseIsDown] = useState(false);
 
   const mouseDownHandler = ({ latlng }) => {
+    console.log(latlng);
     if (!isDraggable) {
       if (!polygon.isInitialPolygon) {
         changePolygon(initialPolygon);

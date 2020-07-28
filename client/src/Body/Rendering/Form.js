@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form as BootstrapForm } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 const styles = {
   form: {
@@ -20,14 +21,31 @@ function Form({ changeLayer, changeUrl, polygon }) {
   const [cloudiness, setCloudiness] = useState(20);
   const [layer, setLayer] = useState('TRUE_COLOR');
 
-  const submitHandler = (event) => {
+  const postPolygonBounds = async (bounds) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:1337/api/post_polygon',
+        {
+          start: bounds.start,
+          end: bounds.end,
+          isInitialPolygon: bounds.isInitialPolygon,
+          fromDate: fromDate,
+          toDate: toDate,
+          cloudiness: cloudiness,
+        }
+      );
+      console.log('👉 Returned data:', response);
+    } catch (e) {
+      console.log(`😱 Axios request failed: ${e}`);
+    }
+  };
+
+  const submitHandler = async (event) => {
     event.preventDefault();
     changeLayer(layer);
     const url = `https://services.sentinel-hub.com/ogc/wms/501e9445-5b62-41ab-b1d2-209ce2878130?LAYERS=${layer}$TIME=${fromDate}/${toDate}&MAXCC=${cloudiness}`;
     changeUrl(url);
-    if (polygon.isInitialValue) {
-      console.log(polygon);
-    }
+    postPolygonBounds(polygon);
   };
 
   return (
