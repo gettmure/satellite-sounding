@@ -3,42 +3,62 @@ import PropTypes from 'prop-types';
 import { Map as LeafletMap, TileLayer, WMSTileLayer } from 'react-leaflet';
 import BoundingBox from './BoundingBox';
 
+const initialPolygon = {
+  start: {
+    lat: 0,
+    lng: 0,
+  },
+  end: {
+    lat: 0,
+    lng: 0,
+  },
+  isInitialPolygon: true,
+};
+
 const config = {
   attribution:
     '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
   urlPattern: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 };
 
-const initialPoint = [
-  [0, 0],
-  [0, 0],
-];
-
-function Map({ layer, url }) {
-  const [startPoint, setStartPoint] = useState([]);
-  const [endPoint, setEndPoint] = useState([]);
-  const [polygon, setPolygon] = useState(initialPoint);
+function Map({ layer, url, isDraggable, polygon, changePolygon }) {
+  const [startPoint, setStartPoint] = useState({
+    lat: 0,
+    lng: 0,
+  });
+  const [endPoint, setEndPoint] = useState({
+    lat: 0,
+    lng: 0,
+  });
   const [mouseIsDown, setMouseIsDown] = useState(false);
 
   const mouseDownHandler = ({ latlng }) => {
-    const { lat, lng } = latlng;
-    setStartPoint([lat, lng]);
-    setMouseIsDown(true);
+    if (!isDraggable) {
+      if (!polygon.isInitialPolygon) {
+        changePolygon(initialPolygon);
+      }
+      setStartPoint({ lat: latlng.lat, lng: latlng.lng });
+      setMouseIsDown(true);
+    }
   };
   const mouseMoveHandler = ({ latlng }) => {
-    if (mouseIsDown) {
-      const { lat, lng } = latlng;
-      setEndPoint([lat, lng]);
-      setPolygon([startPoint, endPoint]);
+    if (mouseIsDown && !isDraggable) {
+      setEndPoint({ lat: latlng.lat, lng: latlng.lng });
+      changePolygon({
+        start: startPoint,
+        end: endPoint,
+        isInitialPolygon: false,
+      });
     }
   };
   const mouseUpHandler = () => {
-    setMouseIsDown(false);
+    if (!isDraggable) {
+      setMouseIsDown(false);
+    }
   };
-
   return (
     <LeafletMap
-      dragging={false}
+      dragging={isDraggable}
       onmousedown={mouseDownHandler}
       onmousemove={mouseMoveHandler}
       onmouseup={mouseUpHandler}
@@ -46,16 +66,15 @@ function Map({ layer, url }) {
       zoom={14}
       minZoom={10}
       maxZoom={16}
-      attributionControl={true}
-      zoomControl={true}
       doubleClickZoom={true}
       scrollWheelZoom={true}
       animate={true}
       easeLinearity={0.35}
+      zoomControl={false}
     >
       <TileLayer attribution={config.attribution} url={config.urlPattern} />
       <WMSTileLayer tileSize={512} url={url} layers={layer} />
-      <BoundingBox mouseIsDown={mouseIsDown} polygon={polygon} />
+      <BoundingBox polygon={polygon} />
     </LeafletMap>
   );
 }
@@ -63,6 +82,9 @@ function Map({ layer, url }) {
 Map.propTypes = {
   layer: PropTypes.string,
   url: PropTypes.string.isRequired,
+  isDraggable: PropTypes.bool.isRequired,
+  polygon: PropTypes.object.isRequired,
+  changePolygon: PropTypes.func.isRequired,
 };
 
 export default Map;

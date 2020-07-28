@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 import Map from './Map/Map';
 import Form from './Form';
+import Toolbar from './Map/Toolbar';
+
+const initialPolygon = {
+  start: {
+    lat: 0,
+    lng: 0,
+  },
+  end: {
+    lat: 0,
+    lng: 0,
+  },
+  isInitialPolygon: true,
+};
 
 const config = {
   baseUrl:
@@ -8,13 +21,22 @@ const config = {
 };
 
 export default function Container() {
-  const [renderingType, setRenderingType] = useState('TRUE_COLOR');
+  const [layer, setLayer] = useState('TRUE_COLOR');
   const [url, setUrl] = useState(config.baseUrl);
+  const [isDraggable, setIsDraggable] = useState(true);
+  const [polygon, setPolygon] = useState(initialPolygon);
 
   return (
-    <div className="map-container">
-      <Form changeRenderingType={setRenderingType} changeUrl={setUrl}></Form>
-      <Map layer={renderingType} url={url} />
+    <div className="content-container">
+      <Form polygon={polygon} changeLayer={setLayer} changeUrl={setUrl}></Form>
+      <Toolbar setDragging={setIsDraggable}></Toolbar>
+      <Map
+        polygon={polygon}
+        changePolygon={setPolygon}
+        isDraggable={isDraggable}
+        layer={layer}
+        url={url}
+      />
     </div>
   );
 }

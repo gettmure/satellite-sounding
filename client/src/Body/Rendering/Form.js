@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 const styles = {
   form: {
     position: 'fixed',
-    top: 'inherit ',
+    top: 'inherit',
     right: '0',
     zIndex: 999,
     padding: 20,
@@ -14,15 +14,20 @@ const styles = {
   },
 };
 
-function Form({ changeRenderingType, changeUrl }) {
+function Form({ changeLayer, changeUrl, polygon }) {
   const [fromDate, setFromDate] = useState('2017-10-23');
   const [toDate, setToDate] = useState('2018-10-23');
   const [cloudiness, setCloudiness] = useState(20);
+  const [layer, setLayer] = useState('TRUE_COLOR');
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const url = `https://services.sentinel-hub.com/ogc/wms/501e9445-5b62-41ab-b1d2-209ce2878130?TIME=${fromDate}/${toDate}&MAXCC=${cloudiness}`;
+    changeLayer(layer);
+    const url = `https://services.sentinel-hub.com/ogc/wms/501e9445-5b62-41ab-b1d2-209ce2878130?LAYERS=${layer}$TIME=${fromDate}/${toDate}&MAXCC=${cloudiness}`;
     changeUrl(url);
+    if (polygon.isInitialValue) {
+      console.log(polygon);
+    }
   };
 
   return (
@@ -32,7 +37,9 @@ function Form({ changeRenderingType, changeUrl }) {
       onSubmit={submitHandler}
     >
       <BootstrapForm.Group
-        onChange={(event) => changeRenderingType(event.target.value)}
+        onChange={(event) => {
+          setLayer(event.target.value);
+        }}
       >
         <BootstrapForm.Label>Rendering</BootstrapForm.Label>
         <BootstrapForm.Check
@@ -144,8 +151,9 @@ function Form({ changeRenderingType, changeUrl }) {
 }
 
 Form.propTypes = {
-  changeRenderingType: PropTypes.func.isRequired,
+  changeLayer: PropTypes.func.isRequired,
   changeUrl: PropTypes.func.isRequired,
+  polygon: PropTypes.object.isRequired,
 };
 
 export default Form;

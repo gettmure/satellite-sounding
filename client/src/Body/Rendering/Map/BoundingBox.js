@@ -1,27 +1,26 @@
 import React from 'react';
-import PropTypes, { number } from 'prop-types';
-import { Rectangle } from 'react-leaflet';
+import PropTypes from 'prop-types';
+import { Rectangle, Marker } from 'react-leaflet';
 
-const initialPoint = [
-  [0, 0],
-  [0, 0],
-];
-
-function BoundingBox({ mouseIsDown, polygon }) {
-  if (mouseIsDown && polygon) {
-    return <Rectangle color="purple" bounds={polygon} />;
+function BoundingBox({ polygon }) {
+  const { start, end, isInitialPolygon } = polygon;
+  const bounds = [
+    [start.lat, start.lng],
+    [end.lat, end.lng],
+  ];
+  if (!isInitialPolygon) {
+    return (
+      <Rectangle color="purple" bounds={bounds}>
+        <Marker position={{ lat: start.lat, lng: start.lng }} />
+      </Rectangle>
+    );
   } else {
-    if (polygon != initialPoint) {
-      return <Rectangle color="purple" bounds={polygon} />;
-    } else {
-      return null;
-    }
+    return null;
   }
 }
 
 BoundingBox.propTypes = {
-  mouseIsDown: PropTypes.bool.isRequired,
-  polygon: PropTypes.arrayOf(PropTypes.arrayOf(number)).isRequired,
+  polygon: PropTypes.object.isRequired,
 };
 
 export default BoundingBox;
