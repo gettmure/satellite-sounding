@@ -1,7 +1,5 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import PropTypes from 'prop-types';
 
 import satelliteBackground from '../assets/images/satellite-background.jpg';
 
@@ -38,7 +36,6 @@ const styles = {
   },
 };
 
-
 function Welcome() {
   return (
     <div className="welcome-container" style={styles.container}>
@@ -46,12 +43,11 @@ function Welcome() {
       <div className="welcome-text" style={styles.welcomeText}>
         <h1>Satellite sounding application</h1>
         <a href="/rendering">
-  <Button variant="primary">Get started!</Button>
-    </a>
+          <Button variant="primary">Get started!</Button>
+        </a>
       </div>
     </div>
   );
 }
 
-  
 export default Welcome;
