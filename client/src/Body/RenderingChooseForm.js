@@ -132,7 +132,7 @@ function RenderingChooseForm({ changeRenderingType, changeUrl }) {
           max="100"
         />{' '}
         <p />
-        <Button type="submit">Нажми меня</Button>
+        <Button type="submit">Apply</Button>
       </Form.Group>
     </Form>
   );
