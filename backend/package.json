@@ -13,7 +13,9 @@
     "@google/earthengine": "^0.1.228",
     "@sentinel-hub/sentinelhub-js": "^0.2.24",
     "express": "^4.17.1",
-    "moment": "^2.27.0"
+    "highcharts-export-server": "^2.0.28",
+    "moment": "^2.27.0",
+    "pngjs": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

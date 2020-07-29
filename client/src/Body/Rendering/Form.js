@@ -35,7 +35,9 @@ function Form({ changeLayer, changeUrl, polygon }) {
         }
       );
       console.log('👉 Returned data:', response);
+      alert('Data was sent successfully!');
     } catch (e) {
+      // alert('Error! Check console.');
       console.log(`😱 Axios request failed: ${e}`);
     }
   };

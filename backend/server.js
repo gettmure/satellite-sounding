@@ -1,4 +1,4 @@
-const { getImage } = require('./sentinel');
+const { fetchImages } = require('./sentinel');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -22,7 +22,7 @@ app.use(function (req, response, next) {
   next();
 });
 
-app.post('/api/post_polygon', (request, response) => {
+app.post('/api/post_polygon', async (request, response) => {
   const {
     start,
     end,
@@ -45,7 +45,16 @@ app.post('/api/post_polygon', (request, response) => {
       Math.max(start.lat, end.lat).toPrecision(8),
       Math.max(start.lng, end.lng).toPrecision(8),
     ];
-    getImage(minX, minY, maxX, maxY, fromDate, toDate, cloudiness);
+    const ndvi = await fetchImages(
+      minX,
+      minY,
+      maxX,
+      maxY,
+      fromDate,
+      toDate,
+      cloudiness
+    );
+    // console.log(ndvi);
     console.log('Done!');
   }
 });
