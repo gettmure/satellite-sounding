@@ -3,6 +3,7 @@ import { Form as BootstrapForm } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Loader from './Loader';
 
 const styles = {
   form: {
@@ -20,24 +21,29 @@ function Form({ changeLayer, changeUrl, polygon }) {
   const [toDate, setToDate] = useState('2018-10-23');
   const [cloudiness, setCloudiness] = useState(20);
   const [layer, setLayer] = useState('TRUE_COLOR');
+  const [loading, setLoading] = useState(false);
 
   const postPolygonBounds = async (bounds) => {
     try {
-      const response = await axios.post(
-        'http://localhost:1337/api/post_polygon',
-        {
-          start: bounds.start,
-          end: bounds.end,
-          isInitialPolygon: bounds.isInitialPolygon,
-          fromDate: fromDate,
-          toDate: toDate,
-          cloudiness: cloudiness,
-        }
-      );
-      console.log('👉 Returned data:', response);
-      alert('Data was sent successfully!');
+      if (!polygon.isInitialPolygon) {
+        setLoading(true);
+        const response = await axios.post(
+          'http://localhost:1337/api/post_polygon',
+          {
+            start: bounds.start,
+            end: bounds.end,
+            isInitialPolygon: bounds.isInitialPolygon,
+            fromDate: fromDate,
+            toDate: toDate,
+            cloudiness: cloudiness,
+          }
+        );
+        console.log('👉 Returned data:', response);
+        setLoading(false);
+        alert('Data was received successfully!');
+      }
     } catch (e) {
-      // alert('Error! Check console.');
+      alert('Error! Check console.');
       console.log(`😱 Axios request failed: ${e}`);
     }
   };
@@ -165,6 +171,7 @@ function Form({ changeLayer, changeUrl, polygon }) {
         />
         <p />
         <Button type="submit">Apply</Button>
+        {loading && <Loader></Loader>}
       </BootstrapForm.Group>
     </BootstrapForm>
   );

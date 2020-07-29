@@ -23,40 +23,28 @@ app.use(function (req, response, next) {
 });
 
 app.post('/api/post_polygon', async (request, response) => {
-  const {
-    start,
-    end,
-    isInitialPolygon,
+  const { start, end, fromDate, toDate, cloudiness } = request.body;
+  console.log('Processing...');
+  const [minY, minX, maxY, maxX] = [
+    Math.min(start.lat, end.lat).toPrecision(8),
+    Math.min(start.lng, end.lng).toPrecision(8),
+    Math.max(start.lat, end.lat).toPrecision(8),
+    Math.max(start.lng, end.lng).toPrecision(8),
+  ];
+  const ndvi = await fetchImages(
+    minX,
+    minY,
+    maxX,
+    maxY,
     fromDate,
     toDate,
-    cloudiness,
-  } = request.body;
-  if (isInitialPolygon) {
-    response.status(400).json({ success: false, error: 'Polygon is empty' });
-  } else {
-    console.log('Processing...');
-    const [minY, minX, maxY, maxX] = [
-      Math.min(start.lat, end.lat).toPrecision(8),
-      Math.min(start.lng, end.lng).toPrecision(8),
-      Math.max(start.lat, end.lat).toPrecision(8),
-      Math.max(start.lng, end.lng).toPrecision(8),
-    ];
-    const ndvi = await fetchImages(
-      minX,
-      minY,
-      maxX,
-      maxY,
-      fromDate,
-      toDate,
-      cloudiness
-    );
-    console.log(ndvi);
-    console.log('Done!');
-    response.json({
-      status: 200,
-      ndviData: ndvi,
-    });
-  }
+    cloudiness
+  );
+  console.log('Done!');
+  response.json({
+    status: 200,
+    ndviData: ndvi,
+  });
 });
 
 app.listen(1337, () => {

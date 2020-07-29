@@ -63,8 +63,8 @@ const getAverageNdvi = async (bbox, fromTime, toTime, layer, imageIndex) => {
   const ndvi = await ndviFromStream;
   const ndviObject = {
     ndviValue: ndvi,
-    fromTime,
-    toTime,
+    fromTime: fromTime,
+    toTime: toTime,
   };
   return ndviObject;
 };
