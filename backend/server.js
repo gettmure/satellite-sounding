@@ -35,10 +35,6 @@ app.post('/api/post_polygon', async (request, response) => {
     response.status(400).json({ success: false, error: 'Polygon is empty' });
   } else {
     console.log('Processing...');
-    response.json({
-      status: 200,
-      response: 'OK',
-    });
     const [minY, minX, maxY, maxX] = [
       Math.min(start.lat, end.lat).toPrecision(8),
       Math.min(start.lng, end.lng).toPrecision(8),
@@ -54,8 +50,12 @@ app.post('/api/post_polygon', async (request, response) => {
       toDate,
       cloudiness
     );
-    // console.log(ndvi);
+    console.log(ndvi);
     console.log('Done!');
+    response.json({
+      status: 200,
+      ndviData: ndvi,
+    });
   }
 });
 

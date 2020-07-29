@@ -14,10 +14,10 @@ const getDates = (fromDate, toDate) => {
   const fromDateParts = fromDate.split('-').map(Number);
   const toDateParts = toDate.split('-').map(Number);
   const fromDateUtc = new Date(
-    Date.UTC(fromDateParts[0], fromDateParts[1] - 1, fromDateParts[2])
+    Date.UTC(fromDateParts[0], fromDateParts[1] - 1, fromDateParts[2], 0, 0, 0)
   );
   const toDateUtc = new Date(
-    Date.UTC(toDateParts[0], toDateParts[1] - 1, toDateParts[2])
+    Date.UTC(toDateParts[0], toDateParts[1] - 1, toDateParts[2], 23, 59, 59)
   );
   return [fromDateUtc, toDateUtc];
 };
@@ -49,6 +49,7 @@ const fetchImages = async (
       height: 720,
       format: MimeTypes.PNG,
     };
+    console.log(fromTime, toTime);
     const getBlob = async () => {
       return await layer.getMap(getMapParams, ApiType.WMS);
     };
