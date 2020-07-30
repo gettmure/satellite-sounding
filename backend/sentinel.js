@@ -61,12 +61,7 @@ const getAverageNdvi = async (bbox, fromTime, toTime, layer, imageIndex) => {
     });
   });
   const ndvi = await ndviFromStream;
-  const ndviObject = {
-    ndviValue: ndvi,
-    fromTime: fromTime,
-    toTime: toTime,
-  };
-  return ndviObject;
+  return ndvi;
 };
 
 const fetchImages = async (
@@ -89,7 +84,16 @@ const fetchImages = async (
   });
   for (let i = 0; i < 5; i++) {
     const ndvi = await getAverageNdvi(bbox, fromTime, toTime, layer, i);
-    ndviArray.push(ndvi);
+    const ndviObject = {
+      ndviValue: ndvi,
+      fromTime: `${fromTime.getFullYear()}-${
+        fromTime.getMonth() + 1
+      }-${fromTime.getDate()}`,
+      toTime: `${toTime.getFullYear()}-${
+        toTime.getMonth() + 1
+      }-${toTime.getDate()}`,
+    };
+    ndviArray.push(ndviObject);
     fromTime.setFullYear(fromTime.getFullYear() + 1);
     toTime.setFullYear(toTime.getFullYear() + 1);
   }
