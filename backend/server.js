@@ -23,7 +23,7 @@ app.use(function (req, response, next) {
 });
 
 app.post('/api/post_polygon', async (request, response) => {
-  const { start, end, fromDate, toDate, cloudiness } = request.body;
+  const { start, end, fromDate, toDate, cloudiness, yearsCount } = request.body;
   console.log('Processing...');
   const [minY, minX, maxY, maxX] = [
     Math.min(start.lat, end.lat).toPrecision(8),
@@ -38,7 +38,8 @@ app.post('/api/post_polygon', async (request, response) => {
     maxY,
     fromDate,
     toDate,
-    cloudiness
+    cloudiness,
+    yearsCount
   );
   console.log(ndvi);
   console.log('Done!');

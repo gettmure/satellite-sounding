@@ -71,7 +71,8 @@ const fetchImages = async (
   maxY,
   fromDate,
   toDate,
-  cloudiness
+  cloudiness,
+  yearsCount
 ) => {
   let ndviArray = [];
   const bbox = new BBox(CRS_EPSG4326, minX, minY, maxX, maxY);
@@ -82,7 +83,7 @@ const fetchImages = async (
     layerId: 'TRUE_COLOR',
     maxCloudCoverPercent: cloudiness,
   });
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < yearsCount; i++) {
     const ndvi = await getAverageNdvi(bbox, fromTime, toTime, layer, i);
     const ndviObject = {
       ndviValue: ndvi,

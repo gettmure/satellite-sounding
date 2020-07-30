@@ -20,12 +20,13 @@ function Form({ changeLayer, changeUrl, polygon }) {
   const [fromDate, setFromDate] = useState('2017-10-23');
   const [toDate, setToDate] = useState('2018-10-23');
   const [cloudiness, setCloudiness] = useState(20);
+  const [yearsCount, setYearsCount] = useState(1);
   const [layer, setLayer] = useState('TRUE_COLOR');
   const [loading, setLoading] = useState(false);
 
   const postPolygonBounds = async (bounds) => {
     try {
-      if (!polygon.isInitialPolygon) {
+      if (!polygon.isInitialPolygon && !loading) {
         setLoading(true);
         const response = await axios.post(
           'http://localhost:1337/api/post_polygon',
@@ -36,11 +37,12 @@ function Form({ changeLayer, changeUrl, polygon }) {
             fromDate: fromDate,
             toDate: toDate,
             cloudiness: cloudiness,
+            yearsCount: yearsCount,
           }
         );
         console.log('👉 Returned data:', response);
         setLoading(false);
-        alert('Data was received successfully!');
+        alert('Data was received successfully! Check the console.');
       }
     } catch (e) {
       alert('Error! Check console.');
@@ -168,6 +170,19 @@ function Form({ changeLayer, changeUrl, polygon }) {
           name="name2"
           min="0"
           max="100"
+        />
+        <p />
+        <label htmlFor="years-count">Years count:</label>
+        <input
+          onChange={(event) => {
+            setYearsCount(event.target.value);
+          }}
+          value={yearsCount}
+          id="years-count"
+          type="number"
+          name="name2"
+          min="1"
+          max="10"
         />
         <p />
         <Button type="submit">Apply</Button>
